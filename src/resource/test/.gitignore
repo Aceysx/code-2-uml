@@ -1,0 +1,10 @@
+.git
+.gradle
+.DS_Store
+tdd-java-base.*
+build
+out
+*.iml
+*.ipr
+*.iws
+.idea/
