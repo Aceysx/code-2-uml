@@ -14,15 +14,11 @@ public class GuessInputCommand implements InputCommand {
 
     private BufferedReader bufferedReader;
 
-    {
-        bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-    }
-
-    public GuessInputCommand() {
+    public GuessInputCommand(Game game, String a) {
     }
 
     @Override
-    public Answer input() throws IOException {
+    public Answer input(Game game, String a) throws IOException {
         System.out.println("------Please input your answer as x x x x , x <10 ------");
         String input = bufferedReader.readLine();
         Answer answer = null;

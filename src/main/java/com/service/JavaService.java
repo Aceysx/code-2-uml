@@ -2,6 +2,8 @@ package com.service;
 
 import com.listener.JavaListener;
 import com.listener.ParserListener;
+import com.model.JavaStructure;
+import com.model.Structure;
 import com.util.FileUtil;
 import com.util.parser.JavaLexer;
 import com.util.parser.JavaParser;
@@ -23,10 +25,15 @@ public class JavaService {
         List<String> filePaths = FileUtil.findFilesPathBy(new File(projectDir));
         filePaths = filePaths.stream().filter(item -> item.endsWith(".java")).collect(Collectors.toList());
         List<JavaParser> parsers = toParses(filePaths);
-        ParserListener rule = new JavaListener();
 
-        JavaParser.CompilationUnitContext compilationUnitContext = javaParser.compilationUnit();
-        ParseTreeWalker.DEFAULT.walk(rule, compilationUnitContext);
+        List<Structure> structures = new ArrayList<>();
+        parsers.forEach(parser -> {
+            ParserListener listener = new JavaListener(new JavaStructure(),parser);
+            JavaParser.CompilationUnitContext compilationUnitContext = parser.compilationUnit();
+            ParseTreeWalker.DEFAULT.walk(listener, compilationUnitContext);
+            structures.add(listener.getStructure());
+        });
+        System.out.println(213);
     }
 
 
