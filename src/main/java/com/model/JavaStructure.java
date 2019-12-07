@@ -1,23 +1,32 @@
 package com.model;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 public class JavaStructure extends Structure {
-    private String packageName;
+    private Package packagee;
     private List<Import> imports;
     private List<Klass> klasses;
 
     public void updatePackageName(String packageName) {
-        this.packageName = packageName;
+        if (Objects.nonNull(packageName)) {
+            this.packagee = Package.of(
+                packageName.substring(packageName.indexOf(" "), packageName.length() - 1)
+            );
+        }
     }
 
     public void addImport(String text) {
         if (Objects.isNull(imports)) {
             this.imports = new ArrayList<>();
         }
-        this.imports.add(new Import(text));
+        this.imports.add(Import.of(
+            text.substring(text.indexOf(" "), text.length() - 1)
+        ));
     }
 
     public void addKlass(List<Modifier> modifiers, boolean isClassType, String className, List<Type> types) {
@@ -25,7 +34,7 @@ public class JavaStructure extends Structure {
             this.klasses = new ArrayList<>();
         }
         this.klasses.add(
-            new Klass(modifiers,isClassType,className,types)
+            new Klass(modifiers, isClassType, className, types)
         );
     }
 

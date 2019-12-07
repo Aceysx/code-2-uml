@@ -10,8 +10,9 @@ import java.io.InputStreamReader;
 /**
  * Created by jxzhong on 2017/5/19.
  */
+@GeneratedValue()
 public class GuessInputCommand implements InputCommand {
-
+    @GeneratedValue()
     private BufferedReader bufferedReader;
 
     public GuessInputCommand(Game game, String a) {

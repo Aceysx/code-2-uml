@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class JavaServiceTest {
     private JavaService javaService = new JavaService();
-    private static String projectDir = System.getProperty("user.dir") + "/src/resource/test/src/main/java/tw/commands";
+    private static String projectDir = "/Users/xinsi/demo/ddd-architecture-samples/spring-with-mybatis/src/main";
     @Test
     public void should_success() throws IOException {
         javaService.parse(projectDir);

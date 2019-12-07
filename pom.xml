@@ -28,7 +28,7 @@
         <dependency>
             <groupId>net.sourceforge.plantuml</groupId>
             <artifactId>plantuml</artifactId>
-            <version>8059</version>
+            <version>1.2019.12</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -42,12 +42,4 @@
             <version>1.16.20</version>
         </dependency>
     </dependencies>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
 </project>
