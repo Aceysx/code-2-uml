@@ -35,7 +35,7 @@ public class FileUtil {
             if (!distFile.getParentFile().exists()) distFile.getParentFile().mkdirs();
             bufferedReader = new BufferedReader(new StringReader(res));
             bufferedWriter = new BufferedWriter(new FileWriter(distFile));
-            char buf[] = new char[1024];         //字符缓冲区
+            char buf[] = new char[1024];
             int len;
             while ((len = bufferedReader.read(buf)) != -1) {
                 bufferedWriter.write(buf, 0, len);

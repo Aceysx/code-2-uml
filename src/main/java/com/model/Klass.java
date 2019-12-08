@@ -9,15 +9,15 @@ import java.util.Objects;
 @Getter
 public class Klass {
     private List<Modifier> modifiers;
-    private boolean isClass;
+    private String type;
     private String name;
     private List<Type> types;
     private List<Field> fields;
     private List<Method> methods;
 
-    Klass(List<Modifier> modifiers, boolean isClassType, String className, List<Type> types) {
+    Klass(List<Modifier> modifiers, String type, String className, List<Type> types) {
         this.modifiers = modifiers;
-        this.isClass = isClassType;
+        this.type = type;
         this.name = className;
         this.types = types;
     }

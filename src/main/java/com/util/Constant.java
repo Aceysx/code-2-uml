@@ -10,4 +10,8 @@ public class Constant {
     public final static String PUBLIC_MODIFIER_TOKEN = "public";
     public final static String PROTECTED_MODIFIER_TOKEN = "protected";
     public final static String PRIVATE_MODIFIER_TOKEN = "private";
+    public final static String ANNOTATION_TOKEN = "annotation";
+    public final static String INTERFACE_TOKEN = "interface";
+    public final static String CLASS_TOKEN = "class";
+
 }

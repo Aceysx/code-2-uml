@@ -1,6 +1,7 @@
 package com.service;
 
 import com.model.*;
+import com.util.FileUtil;
 import net.sourceforge.plantuml.SourceFileReader;
 
 import java.io.File;
@@ -20,6 +21,7 @@ public class JavaUml {
     private JavaUml(List<Structure> structures) {
         this.structures = structures.stream().map(item ->
             (JavaStructure) item)
+            .filter(item -> !Objects.equals(item.getKlass().getType(), ANNOTATION_TOKEN))
             .collect(Collectors.toList());
         umlText = new StringBuffer(START_TOKEN)
             .append(NEW_LINE);
@@ -30,6 +32,7 @@ public class JavaUml {
         javaUml.parseClasses();
         javaUml.parseClassRelation();
         String format = javaUml.format();
+        FileUtil.write(format);
         javaUml.png();
         return format;
     }
@@ -82,7 +85,7 @@ public class JavaUml {
             }
             Klass klass = structure.getKlass();
             umlText
-                .append(klass.isClass() ? "class " : "interface ")
+                .append(klass.getType())
                 .append(SPACE_TOKEN)
                 .append(".")
                 .append(klass.getName())

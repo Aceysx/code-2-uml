@@ -29,12 +29,12 @@ public class JavaStructure extends Structure {
         ));
     }
 
-    public void addKlass(List<Modifier> modifiers, boolean isClassType, String className, List<Type> types) {
+    public void addKlass(List<Modifier> modifiers, String type, String className, List<Type> types) {
         if (Objects.isNull(klasses)) {
             this.klasses = new ArrayList<>();
         }
         this.klasses.add(
-            new Klass(modifiers, isClassType, className, types)
+            new Klass(modifiers, type, className, types)
         );
     }
 

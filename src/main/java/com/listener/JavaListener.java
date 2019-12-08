@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.util.Constant.ANNOTATION_TOKEN;
+import static com.util.Constant.CLASS_TOKEN;
+import static com.util.Constant.INTERFACE_TOKEN;
+
 public class JavaListener extends ParserListener {
     private JavaParser parser;
 
@@ -38,16 +42,25 @@ public class JavaListener extends ParserListener {
     public void enterTypeDeclaration(JavaParser.TypeDeclarationContext ctx) {
         List<Modifier> modifiers = parseClassModifiers(ctx);
         ParseTree classContext = ctx.getChild(modifiers.size());
-        boolean isClassType = classContext instanceof JavaParser.ClassDeclarationContext;
         String className = classContext.getChild(1).getText();
         List<Type> types = parseClassTypes(classContext);
         getJavaStructure()
             .addKlass(
                 modifiers,
-                isClassType,
+                getCurrentType(classContext),
                 className,
                 types
             );
+    }
+
+    private String getCurrentType(ParseTree classContext) {
+        if (classContext instanceof JavaParser.ClassDeclarationContext) {
+            return CLASS_TOKEN;
+        }
+        if (classContext instanceof JavaParser.InterfaceDeclarationContext) {
+            return INTERFACE_TOKEN;
+        }
+        return ANNOTATION_TOKEN;
     }
 
     @Override
