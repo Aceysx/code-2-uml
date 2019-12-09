@@ -157,17 +157,17 @@ public class JavaUml {
         return result.toString();
     }
 
-    private char modifierIcon(String text) {
+    private String modifierIcon(String text) {
         if (Objects.equals(text, PUBLIC_MODIFIER_TOKEN)) {
-            return '+';
+            return "+";
         }
         if (Objects.equals(text, PROTECTED_MODIFIER_TOKEN)) {
-            return '#';
+            return "#";
         }
         if (Objects.equals(text, PRIVATE_MODIFIER_TOKEN)) {
-            return '-';
+            return "-";
         }
-        return '~';
+        return "~ "+ text;
     }
 
 

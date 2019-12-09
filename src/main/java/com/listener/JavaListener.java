@@ -64,6 +64,13 @@ public class JavaListener extends ParserListener {
     }
 
     @Override
+    public void enterInterfaceBodyDeclaration(JavaParser.InterfaceBodyDeclarationContext ctx) {
+        getJavaStructure()
+            .getKlass()
+            .addMethod(parseInterfaceMethod(ctx));
+    }
+
+    @Override
     public void enterClassBodyDeclaration(JavaParser.ClassBodyDeclarationContext ctx) {
         if (isFiledContext(ctx)) {
             getJavaStructure()
@@ -77,9 +84,21 @@ public class JavaListener extends ParserListener {
         }
     }
 
+    private Method parseInterfaceMethod(JavaParser.InterfaceBodyDeclarationContext ctx) {
+        ParseTree methodContext = find(ctx, "//interfaceMethodDeclaration")
+            .iterator().next();
+        List<Method.Param> params = find((RuleContext) methodContext, "//formalParameter").stream()
+            .map(context -> Method.ofParam(textOf((RuleContext) context)))
+            .collect(Collectors.toList());
+        String methodName;
+        methodName = methodContext.getChild(1).getText();
+        List<Modifier> modifiers = parseMethodModifiers(ctx, false);
+        return Method.of(false, modifiers, methodName, params);
+    }
+
     private Method parseMethod(JavaParser.ClassBodyDeclarationContext ctx) {
         boolean isConstructor = !find(ctx, "//constructorDeclaration").isEmpty();
-        List<Modifier> modifiers = parseMethodModifiers(ctx,isConstructor);
+        List<Modifier> modifiers = parseMethodModifiers(ctx, isConstructor);
         ParseTree methodContext = find(ctx,
             isConstructor ? "//constructorDeclaration" : "//methodDeclaration")
             .iterator().next();
@@ -123,6 +142,7 @@ public class JavaListener extends ParserListener {
         Collection<ParseTree> matches = find(ctx, "//fieldDeclaration");
         return !matches.isEmpty();
     }
+
     // TODO: 2019/12/7 范型的处理 <T> / class<T>
     private List<Type> parseClassTypes(ParseTree context) {
         List<Type> result = new ArrayList<>();
@@ -156,17 +176,21 @@ public class JavaListener extends ParserListener {
         }
         return result;
     }
- private List<Modifier> parseMethodModifiers(RuleContext ctx,boolean isConstructor) {
+
+    private List<Modifier> parseMethodModifiers(RuleContext ctx, boolean isConstructor) {
         List<Modifier> result = new ArrayList<>();
         for (int i = 0; i < ctx.getChildCount(); ++i) {
             ParseTree child = ctx.getChild(i);
             boolean isAnnotation = child.getText().startsWith("@");
-            if(isAnnotation) continue;
+            if (isAnnotation) continue;
 
             if (child instanceof JavaParser.ModifierContext) {
                 result.add(Modifier.of(child.getText()));
             }
-            if (child instanceof JavaParser.MemberDeclarationContext
+            if ((child instanceof JavaParser.MemberDeclarationContext
+                ||
+                child instanceof JavaParser.InterfaceMemberDeclarationContext
+            )
                 &&
                 !isConstructor) {
                 result.add(Modifier.of(child.getChild(0).getChild(0).getText()));
