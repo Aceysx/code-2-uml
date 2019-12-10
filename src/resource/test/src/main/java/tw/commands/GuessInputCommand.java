@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 public class GuessInputCommand implements InputCommand {
     @GeneratedValue()
     private BufferedReader bufferedReader;
-
+    int a;
     public GuessInputCommand(Game game, String a) {
     }
 

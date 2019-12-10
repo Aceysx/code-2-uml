@@ -12,11 +12,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static com.util.Constant.ANNOTATION_TOKEN;
-import static com.util.Constant.CLASS_TOKEN;
-import static com.util.Constant.INTERFACE_TOKEN;
+import static com.util.Constant.*;
 
 public class JavaListener extends ParserListener {
     private JavaParser parser;
@@ -121,11 +118,23 @@ public class JavaListener extends ParserListener {
     }
 
     private List<Modifier> findModifiers(RuleContext ctx) {
-        return Stream.concat(find(ctx, "//classOrInterfaceModifier").stream()
-                .map(context -> Modifier.of(context.getText())),
-            find(ctx, "//classOrInterfaceType").stream()
-                .map(context -> Modifier.of(context.getText())))
+        List<Modifier> classOrInterfaceModifiers = find(ctx, "//classOrInterfaceModifier").stream()
+            .map(context -> Modifier.of(context.getText()))
             .collect(Collectors.toList());
+
+        List<Modifier> classOrInterfaceTypes = find(ctx, "//classOrInterfaceType").stream()
+            .map(context -> Modifier.of(context.getText())).collect(Collectors.toList());
+        if (!classOrInterfaceTypes.isEmpty()) {
+            classOrInterfaceModifiers.add(classOrInterfaceTypes.get(0));
+            return classOrInterfaceModifiers;
+        }
+        List<Modifier> basicTypes = find(ctx, "//typeType").stream()
+            .map(context -> Modifier.of(context.getText())).collect(Collectors.toList());
+        if (!basicTypes.isEmpty()) {
+            classOrInterfaceModifiers.addAll(basicTypes);
+            return basicTypes;
+        }
+        return new ArrayList<>();
     }
 
     private Collection<ParseTree> find(RuleContext ctx, String xpath) {

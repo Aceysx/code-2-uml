@@ -27,7 +27,7 @@ public class JavaUml {
             .append(NEW_LINE);
     }
 
-    public static String parse(List<Structure> structures) throws IOException {
+    static String parse(List<Structure> structures) throws IOException {
         JavaUml javaUml = new JavaUml(structures);
         javaUml.parseClasses();
         javaUml.parseClassRelation();
@@ -76,7 +76,7 @@ public class JavaUml {
         structures.forEach(structure -> {
             boolean hasPackage = Objects.nonNull(structure.getPackagee());
             if (hasPackage) {
-                umlText.append("namespace").append(SPACE_TOKEN)
+                umlText.append("package").append(SPACE_TOKEN)
                     .append(structure.getPackagee().getText())
                     .append("{")
                     .append(NEW_LINE)
@@ -87,7 +87,6 @@ public class JavaUml {
             umlText
                 .append(klass.getType())
                 .append(SPACE_TOKEN)
-                .append(".")
                 .append(klass.getName())
                 .append("{")
                 .append(NEW_LINE);

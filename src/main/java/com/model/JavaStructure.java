@@ -15,7 +15,7 @@ public class JavaStructure extends Structure {
     public void updatePackageName(String packageName) {
         if (Objects.nonNull(packageName)) {
             this.packagee = Package.of(
-                packageName.substring(packageName.indexOf(" "), packageName.length() - 1)
+                packageName.substring(packageName.indexOf(" "), packageName.length() - 1).trim()
             );
         }
     }
@@ -25,7 +25,7 @@ public class JavaStructure extends Structure {
             this.imports = new ArrayList<>();
         }
         this.imports.add(Import.of(
-            text.substring(text.indexOf(" "), text.length() - 1)
+            text.substring(text.indexOf(" "), text.length() - 1).trim()
         ));
     }
 
