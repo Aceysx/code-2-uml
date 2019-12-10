@@ -131,7 +131,7 @@ public class JavaListener extends ParserListener {
         List<Modifier> basicTypes = find(ctx, "//typeType").stream()
             .map(context -> Modifier.of(context.getText())).collect(Collectors.toList());
         if (!basicTypes.isEmpty()) {
-            classOrInterfaceModifiers.addAll(basicTypes);
+            classOrInterfaceModifiers.add(basicTypes.get(0));
             return basicTypes;
         }
         return new ArrayList<>();
@@ -148,7 +148,7 @@ public class JavaListener extends ParserListener {
     }
 
     private boolean isFiledContext(JavaParser.ClassBodyDeclarationContext ctx) {
-        Collection<ParseTree> matches = find(ctx, "//fieldDeclaration");
+        Collection<ParseTree> matches = find(ctx, "//*/memberDeclaration/fieldDeclaration");
         return !matches.isEmpty();
     }
 
