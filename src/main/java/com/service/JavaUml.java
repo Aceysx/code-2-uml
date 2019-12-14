@@ -24,6 +24,7 @@ public class JavaUml {
             .filter(item -> !Objects.equals(item.getKlass().getType(), ANNOTATION_TOKEN))
             .collect(Collectors.toList());
         umlText = new StringBuffer(START_TOKEN)
+            .append(DEFAULT_STYLE_TOKEN)
             .append(NEW_LINE);
     }
 
@@ -79,11 +80,18 @@ public class JavaUml {
                 umlText.append("package").append(SPACE_TOKEN)
                     .append(structure.getPackagee().getText())
                     .append("{")
-                    .append(NEW_LINE)
-                ;
+                    .append(NEW_LINE);
 
             }
             Klass klass = structure.getKlass();
+            if (hasPackage) {
+                umlText.append("package").append(SPACE_TOKEN)
+                    .append(klass.getName()).append(SPACE_TOKEN)
+                    .append("<<").append(WRAP_CLASS_STYLE_TOKEN)
+                    .append(">>")
+                    .append("{")
+                    .append(NEW_LINE);
+            }
             umlText
                 .append(klass.getType())
                 .append(SPACE_TOKEN)
@@ -100,7 +108,7 @@ public class JavaUml {
                 .append(NEW_LINE);
 
             if (hasPackage) {
-                umlText.append("}")
+                umlText.append("}\n}")
                     .append(NEW_LINE);
             }
         });
@@ -166,7 +174,7 @@ public class JavaUml {
         if (Objects.equals(text, PRIVATE_MODIFIER_TOKEN)) {
             return "-";
         }
-        return "~ "+ text;
+        return "~ " + text;
     }
 
 
