@@ -17,7 +17,6 @@ public class Constant {
     public final static String ANNOTATION_TOKEN = "annotation";
     public final static String INTERFACE_TOKEN = "interface";
     public final static String CLASS_TOKEN = "class";
-    public final static String BLANK_STRING_TOKEN = "　";
     public final static String WRAP_CLASS_STYLE_TOKEN = "Rectangle";
 
 }
