@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import static com.util.Constant.*;
 import static java.util.stream.Collectors.joining;
 
-public class JavaUml {
+class JavaUml {
     private final List<JavaStructure> structures;
     private StringBuffer umlText;
 
@@ -55,8 +55,6 @@ public class JavaUml {
                                 .append(parentModifier)
                                 .append("↑")
                                 .append(NEW_LINE));
-
-
                     }
                 }));
     }
