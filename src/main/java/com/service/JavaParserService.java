@@ -22,9 +22,7 @@ import java.util.stream.Collectors;
 class JavaParserService {
     static List<Structure> parse(String projectDir) throws IOException {
         List<String> filePaths = FileUtil.findFilesPathBy(new File(projectDir));
-        filePaths = filePaths.stream().filter(item -> item.endsWith(".java")
-            &&
-            !item.contains("util/parser/"))
+        filePaths = filePaths.stream().filter(item -> item.endsWith(".java"))
             .collect(Collectors.toList());
         List<JavaParser> parsers = toParses(filePaths);
 
