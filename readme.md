@@ -11,7 +11,7 @@ diagram. Combining the tools of [ANTLR v4](https://github.com/antlr/antlr4) and 
 ```java
 java -jar code-2-uml.jar CODE_PATH
 ```
-##### 3 ... your will plantuml code for class diagram and pic in current dir. like below
+##### 3 ... you will plantuml code for class diagram and pic in current dir. like below
 ![example](./example/example_text.png)
 ## Q&A
 
