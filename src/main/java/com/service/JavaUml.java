@@ -116,13 +116,13 @@ public class JavaUml {
                 List<Method.Param> params = method.getParams();
                 if (Objects.nonNull(params)) {
                     umlText
-                        .append("( ")
+                        .append("(")
                         .append(
                             params.stream()
                                 .map(Method.Param::getName)
                                 .collect(joining(","))
                         );
-                    umlText.append(" )")
+                    umlText.append(")")
                         .append(NEW_LINE);
                 }
 

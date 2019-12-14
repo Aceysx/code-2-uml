@@ -112,7 +112,9 @@ public class JavaListener extends ParserListener {
     }
 
     private Field parseField(JavaParser.ClassBodyDeclarationContext ctx) {
-        List<Modifier> modifiers = findModifiers(ctx);
+        List<Modifier> modifiers = findModifiers(ctx).stream()
+            .filter(modifier -> !modifier.getText().startsWith("@"))
+            .collect(Collectors.toList());
         String fieldName = find(ctx, "//variableDeclaratorId").iterator().next().getText();
         return Field.of(modifiers, fieldName);
     }
