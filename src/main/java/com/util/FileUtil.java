@@ -9,7 +9,10 @@ import static com.util.Constant.UML_TEXT_PATH;
 
 public class FileUtil {
 
-    public static List<String> findFilesPathBy(File dir) {
+    public static List<String> findFilesPathBy(File dir) throws FileNotFoundException {
+        if (!dir.exists()) {
+            throw new FileNotFoundException(dir.toString());
+        }
         List<String> files = new ArrayList<>();
         get(dir, files);
         return files;
@@ -55,9 +58,5 @@ public class FileUtil {
                 }
             }
         }
-    }
-
-    public static void saveUmlPng(File png) {
-
     }
 }
