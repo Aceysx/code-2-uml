@@ -96,10 +96,12 @@ class JavaUml {
                 .append(klass.getName())
                 .append("{")
                 .append(NEW_LINE);
+            
+            if (!Params.isExportClassOnly()) {
+                parseFields(klass.getFields());
+                parseMethods(klass.getMethods());
+            }
 
-            parseFields(klass.getFields());
-
-            parseMethods(klass.getMethods());
             umlText
                 .append(NEW_LINE)
                 .append("}")
